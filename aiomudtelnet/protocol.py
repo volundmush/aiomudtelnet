@@ -19,6 +19,7 @@ class MudClientCapabilities:
     It can be subclassed to add more fields as needed, if you need to implement more TelnetOption subtypes that aren't
     covered here.
     """
+    telnet: bool = False
     client_name: str = "UNKNOWN"
     client_version: str = "UNKNOWN"
     encoding: str = "ascii"
@@ -172,10 +173,16 @@ class MudTelnetProtocol:
             case TelnetData():
                 await self._tn_handle_data(message)
             case TelnetCommand():
+                if not self.capabilities.telnet:
+                    await self.change_capabilities({"telnet": True})
                 await self._tn_handle_command(message)
             case TelnetNegotiate():
+                if not self.capabilities.telnet:
+                    await self.change_capabilities({"telnet": True})
                 await self._tn_handle_negotiate(message)
             case TelnetSubNegotiate():
+                if not self.capabilities.telnet:
+                    await self.change_capabilities({"telnet": True})
                 await self._tn_handle_subnegotiate(message)
 
     async def _tn_handle_data(self, message: TelnetData):
