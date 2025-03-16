@@ -282,3 +282,6 @@ class MudTelnetProtocol:
         if self.capabilities.mssp:
             op = self._tn_options.get(TelnetCode.MSSP)
             await op.send_mssp(data)
+
+    async def send_command(self, data: int):
+        await self._tn_out_queue.put(TelnetCommand(command=data))
