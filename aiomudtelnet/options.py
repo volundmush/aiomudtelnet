@@ -431,11 +431,12 @@ class MCCP3Option(TelnetOption):
             # everything in the buffer after this message must be
             # decompressed. We'll do this now.
             try:
-                self.protocol._tn_read_buffer = bytearray(
+                self.protocol._tn_in_buffer = bytearray(
                     self.decompressor.decompress(self.protocol._tn_in_buffer)
                 )
-            except zlib.error as e:
-                pass  # todo: handle this
+            except zlib.error:
+                # TODO: handle decompression errors appropriately
+                pass
 
     async def transform_incoming_data(self, data):
         if self.decompressor:
