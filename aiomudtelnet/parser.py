@@ -31,7 +31,7 @@ class TelnetCode(IntEnum):
     MSSP = 70
 
     # Compression
-    # MCCP1: u8 = 85 - this is deprecrated
+    # MCCP1: u8 = 85 - this is deprecated
     # NOTE: MCCP2 and MCCP3 is currently disabled.
     MCCP2 = 86
     MCCP3 = 87
