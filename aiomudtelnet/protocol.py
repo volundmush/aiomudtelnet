@@ -46,6 +46,7 @@ class MudClientCapabilities:
     proxy: bool = False
     mnes: bool = False
     tls_support: bool = False
+    encryption: bool = False
 
 
 class MudTelnetProtocol:
